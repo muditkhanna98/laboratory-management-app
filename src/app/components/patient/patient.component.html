@@ -1,90 +1,191 @@
-<h4 class="mt-4">Add or View Patients</h4>
-<mat-divider></mat-divider>
-<div class="container-patient">
-  <div
-    class="left-column"
-    *ngIf="
-      this.loginDetails.role === 'staff' || this.loginDetails.role === 'admin'
-    "
-  >
-    <div class="form-container mt-4">
-      <form [formGroup]="patientForm" (ngSubmit)="addPatient()">
-        <mat-form-field class="form-field">
-          <mat-label>First Name</mat-label>
-          <input matInput type="text" formControlName="firstName" />
-        </mat-form-field>
+<mat-tab-group class="mt-4" (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="View/Update Patients"
+    ><h4 class="mt-4">Add or View Patients</h4>
+    <mat-divider></mat-divider>
+    <div class="container-patient">
+      <div
+        class="left-column"
+        *ngIf="
+          this.loginDetails.role === 'staff' ||
+          this.loginDetails.role === 'admin'
+        "
+      >
+        <div class="form-container mt-4">
+          <form [formGroup]="patientForm" (ngSubmit)="addPatient()">
+            <mat-form-field class="form-field">
+              <mat-label>First Name</mat-label>
+              <input matInput type="text" formControlName="firstName" />
+            </mat-form-field>
 
-        <mat-form-field class="form-field">
-          <mat-label>Last Name</mat-label>
-          <input matInput type="text" formControlName="lastName" />
-        </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Last Name</mat-label>
+              <input matInput type="text" formControlName="lastName" />
+            </mat-form-field>
 
-        <mat-form-field class="form-field">
-          <mat-label>Date of Birth</mat-label>
-          <input matInput type="date" formControlName="dob" />
-        </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput type="date" formControlName="dob" />
+            </mat-form-field>
 
-        <mat-form-field class="form-field">
-          <mat-label>Gender</mat-label>
-          <mat-select formControlName="gender">
-            <mat-option value="">Select Gender</mat-option>
-            <mat-option value="Male">Male</mat-option>
-            <mat-option value="Female">Female</mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="">Select Gender</mat-option>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <mat-form-field class="form-field">
-          <mat-label>Contact Number</mat-label>
-          <input matInput type="text" formControlName="contactNumber" />
-        </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>Contact Number</mat-label>
+              <input matInput type="text" formControlName="contactNumber" />
+            </mat-form-field>
 
-        <button
-          mat-raised-button
-          color="accent"
-          [disabled]="patientForm.invalid"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <div class="right-column">
-    <mat-card *ngFor="let patient of patients" class="mt-4">
-      <mat-card-content>
-        <div class="patient-card">
-          <div class="patient-info">
-            <mat-icon>{{
-              patient.gender === "Male" ? "male" : "female"
-            }}</mat-icon>
-            <div class="patient-details">
-              <p><strong>Patient ID:</strong> {{ patient.patientId }}</p>
-              <p><strong>First Name:</strong> {{ patient.firstName }}</p>
-              <p>
-                <strong>Date of Birth:</strong>
-                {{ patient.dob | date : "shortDate" }}
-              </p>
-              <p><strong>Gender:</strong> {{ patient.gender }}</p>
-              <p>
-                <strong>Contact Number:</strong> {{ patient.contactNumber }}
-              </p>
-            </div>
-          </div>
+            <button
+              mat-raised-button
+              color="accent"
+              [disabled]="patientForm.invalid"
+            >
+              Submit
+            </button>
+          </form>
         </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button
-          *ngIf="
-            this.loginDetails.role === 'staff' ||
-            this.loginDetails.role === 'admin'
-          "
-          mat-raised-button
-          color="primary"
-          (click)="deletePatient(patient.patientId)"
-        >
-          Delete
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
+      </div>
+
+      <div class="right-column">
+        <mat-card *ngFor="let patient of patients" class="mt-4">
+          <mat-card-content>
+            <div class="patient-card">
+              <div class="patient-info">
+                <mat-icon>{{
+                  patient.gender === "Male" ? "male" : "female"
+                }}</mat-icon>
+                <div class="patient-details">
+                  <p><strong>Patient ID:</strong> {{ patient.patientId }}</p>
+                  <p><strong>First Name:</strong> {{ patient.firstName }}</p>
+                  <p>
+                    <strong>Date of Birth:</strong>
+                    {{ patient.dob | date : "shortDate" }}
+                  </p>
+                  <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                  <p>
+                    <strong>Contact Number:</strong> {{ patient.contactNumber }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button
+              *ngIf="
+                this.loginDetails.role === 'staff' ||
+                this.loginDetails.role === 'admin'
+              "
+              mat-raised-button
+              color="primary"
+              (click)="deletePatient(patient.patientId)"
+            >
+              Delete
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div></mat-tab
+  >
+  <mat-tab
+    label="Create Appointment"
+    *ngIf="this.loginDetails.role === 'staff'"
+  >
+    <h4 class="mt-4">Create Appointment</h4>
+    <mat-divider></mat-divider>
+    <div class="container">
+      <mat-card *ngFor="let patient of patients" class="mt-4">
+        <mat-card-content>
+          <div class="patient-card">
+            <div class="patient-info">
+              <mat-icon>{{
+                patient.gender === "Male" ? "male" : "female"
+              }}</mat-icon>
+              <div class="patient-details">
+                <p><strong>Patient ID:</strong> {{ patient.patientId }}</p>
+                <p><strong>First Name:</strong> {{ patient.firstName }}</p>
+                <p>
+                  <strong>Date of Birth:</strong>
+                  {{ patient.dob | date : "shortDate" }}
+                </p>
+                <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                <p>
+                  <strong>Contact Number:</strong> {{ patient.contactNumber }}
+                </p>
+              </div>
+            </div>
+            <mat-form-field>
+              <mat-label>Appointment Date and Time</mat-label>
+              <input
+                type="datetime-local"
+                matInput
+                id="dateTime"
+                [(ngModel)]="appointmentDateTime"
+              />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="createAppointment(patient.patientId)"
+          >
+            Create Appointment
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Appointments">
+    <h4 class="mt-4">View Appointments</h4>
+    <mat-divider></mat-divider>
+    <div class="container">
+      <mat-card *ngFor="let appointment of appointments" class="mt-4">
+        <mat-card-content>
+          <div class="appointment-card">
+            <div class="appointment-info">
+              <mat-icon>{{
+                appointment.patient.gender === "Male" ? "male" : "female"
+              }}</mat-icon>
+              <div class="appointment-details">
+                <p>
+                  <strong>Patient ID:</strong>
+                  {{ appointment.patient.patientId }}
+                </p>
+                <p>
+                  <strong>First Name:</strong>
+                  {{ appointment.patient.firstName }}
+                </p>
+                <p>
+                  <strong>Date of Birth:</strong>
+                  {{ appointment.patient.dob | date : "shortDate" }}
+                </p>
+                <p><strong>Gender:</strong> {{ appointment.patient.gender }}</p>
+                <p>
+                  <strong>Contact Number:</strong>
+                  {{ appointment.patient.contactNumber }}
+                </p>
+              </div>
+            </div>
+            <mat-form-field>
+              <mat-label>Appointment Date and Time</mat-label>
+              <input
+                readonly="true"
+                type="datetime-local"
+                matInput
+                id="dateTime"
+                [(ngModel)]="appointment.appointmentDatetime"
+              />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>

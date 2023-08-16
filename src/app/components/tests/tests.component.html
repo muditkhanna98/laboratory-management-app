@@ -1,1 +1,135 @@
-<p>tests works!</p>
+<mat-tab-group class="mt-4">
+  <mat-tab label="Create Test Order"
+    ><div class="container-patient">
+      <div
+        class="left-column"
+        *ngIf="
+          this.loginDetails.role === 'physician' ||
+          this.loginDetails.role === 'admin'
+        "
+      >
+        <div class="form-container">
+          <mat-card *ngFor="let appointment of appointments" class="mt-4">
+            <mat-card-content>
+              <div class="appointment-card">
+                <div class="appointment-info">
+                  <mat-icon>{{
+                    appointment.patient.gender === "Male" ? "male" : "female"
+                  }}</mat-icon>
+                  <div class="appointment-details">
+                    <p>
+                      <strong>Patient ID:</strong>
+                      {{ appointment.patient.patientId }}
+                    </p>
+                    <p>
+                      <strong>First Name:</strong>
+                      {{ appointment.patient.firstName }}
+                    </p>
+                    <p>
+                      <strong>Date of Birth:</strong>
+                      {{ appointment.patient.dob | date : "shortDate" }}
+                    </p>
+                    <p>
+                      <strong>Gender:</strong> {{ appointment.patient.gender }}
+                    </p>
+                    <p>
+                      <strong>Contact Number:</strong>
+                      {{ appointment.patient.contactNumber }}
+                    </p>
+                  </div>
+                </div>
+                <mat-form-field>
+                  <mat-label>Appointment Date and Time</mat-label>
+                  <input
+                    readonly="true"
+                    type="datetime-local"
+                    matInput
+                    id="dateTime"
+                    [(ngModel)]="appointment.appointmentDatetime"
+                  />
+                </mat-form-field>
+                <form [formGroup]="test">
+                  <mat-form-field>
+                    <mat-label>Test</mat-label>
+                    <mat-select formControlName="testName">
+                      <mat-option
+                        *ngFor="let test of tests"
+                        value="{{ test.testId }}"
+                        >{{ test.testName }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </form>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="assignTest(appointment.patient.patientId)"
+                >
+                  Assign Test
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <mat-card *ngFor="let test of tests" class="mt-2">
+          <mat-card-content>
+            <div class="patient-card">
+              <div class="patient-info">
+                <p>{{ test.testId }}: {{ test.testName | uppercase }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div></mat-tab
+  >
+  <mat-tab label="View Test Order/Post Result">
+    <h4 class="mt-4">View Test Orders</h4>
+    <mat-divider></mat-divider>
+    <div class="container">
+      <mat-card
+        [ngClass]="
+          testOrder.status === 'pending' ? 'pending-card' : 'completed-card'
+        "
+        *ngFor="let testOrder of orders"
+        class="mt-4"
+      >
+        <mat-card-content>
+          <div class="test-order-card">
+            <div class="test-order-info">
+              <mat-icon>{{
+                testOrder.patient.gender === "Male" ? "male" : "female"
+              }}</mat-icon>
+              <div class="test-order-details">
+                <p>
+                  <strong>Patient ID:</strong>
+                  {{ testOrder.patient.patientId }}
+                </p>
+                <p>
+                  <strong>First Name:</strong>
+                  {{ testOrder.patient.firstName }}
+                </p>
+                <p>
+                  <strong>Date of Birth:</strong>
+                  {{ testOrder.patient.dob | date : "shortDate" }}
+                </p>
+                <p><strong>Gender:</strong> {{ testOrder.patient.gender }}</p>
+                <p>
+                  <strong>Contact Number:</strong>
+                  {{ testOrder.patient.contactNumber }}
+                </p>
+                <p>
+                  <strong>Test Assigned: </strong>{{ testOrder.test.testName }}
+                </p>
+              </div>
+            </div>
+            <p>Status: {{ testOrder.status | uppercase }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>

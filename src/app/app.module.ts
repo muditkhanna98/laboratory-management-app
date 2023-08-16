@@ -15,13 +15,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { TestsComponent } from './components/tests/tests.component';
 import { RegisterationComponent } from './components/auth/registeration/registeration.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientComponent } from './components/patient/patient.component';
 import { PatientDetailsComponent } from './components/patient-details/patient-details.component';
@@ -41,6 +42,7 @@ import { PatientDetailsComponent } from './components/patient-details/patient-de
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
 
     BrowserAnimationsModule,
     MatIconModule,
@@ -53,6 +55,7 @@ import { PatientDetailsComponent } from './components/patient-details/patient-de
     MatMenuModule,
     MatListModule,
     MatDividerModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

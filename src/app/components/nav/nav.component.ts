@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthResponse } from 'src/app/models/AuthResponse';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,7 +13,7 @@ export class NavComponent implements OnInit, OnDestroy {
   loginDetails: AuthResponse = {};
   private isLoggedInSubscription: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.isLoggedInSubscription = this.authService.isLoggedIn$.subscribe(
@@ -31,5 +32,6 @@ export class NavComponent implements OnInit, OnDestroy {
   logout() {
     localStorage.removeItem('user');
     this.authService.isLoggedInSubject.next({});
+    this.router.navigate(['/login']);
   }
 }

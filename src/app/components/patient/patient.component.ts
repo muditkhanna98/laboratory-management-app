@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
+import { Appointment } from 'src/app/models/Appointment';
 import { AuthResponse } from 'src/app/models/AuthResponse';
 import { Patient } from 'src/app/models/Patient';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,6 +19,9 @@ export class PatientComponent implements OnInit {
   patients: Array<Patient> = [];
   loginDetails: AuthResponse = {};
   private isLoggedInSubscription: Subscription;
+  appointmentDateTime: string;
+
+  appointments: Array<Appointment> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +46,33 @@ export class PatientComponent implements OnInit {
       .getAllPatients()
       .subscribe((patients) => (this.patients = patients));
 
+    this.getAllAppointments();
+
     this.isLoggedInSubscription = this.authService.isLoggedIn$.subscribe(
       (loggedInUser) => {
         this.loginDetails = loggedInUser;
       }
     );
+  }
+
+  getAllAppointments() {
+    this.patientService
+      .getAllAppointments()
+      .subscribe(
+        (values) =>
+          (this.appointments = values.sort(
+            (a, b) =>
+              new Date(a.appointmentDatetime).getTime() -
+              new Date(b.appointmentDatetime).getTime()
+          ))
+      );
+    console.log(this.appointments);
+  }
+
+  onTabChange(event: MatTabChangeEvent) {
+    if (event.tab.textLabel === 'Appointments') {
+      this.getAllAppointments();
+    }
   }
 
   addPatient() {
@@ -66,6 +93,19 @@ export class PatientComponent implements OnInit {
     this.patientService.deletePatient(id).subscribe((values) => {
       this.patients = values;
       this._snack.open('Patient delete', 'cancel');
+    });
+  }
+
+  createAppointment(id: number) {
+    const obj: Appointment = {
+      appointmentDatetime: this.appointmentDateTime,
+      patient: { patientId: id },
+      status: 'pending',
+    };
+
+    this.patientService.addAppointment(obj).subscribe((value) => {
+      console.log(value);
+      this._snack.open('Appointment created successfully');
     });
   }
 }

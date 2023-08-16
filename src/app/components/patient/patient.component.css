@@ -1,0 +1,74 @@
+.form-container {
+  width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+.mat-label {
+  font-size: 14px;
+  color: #555;
+}
+
+.mat-select {
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #1976d2;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #1565c0;
+}
+
+.container-patient {
+  display: flex;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  padding: 20px;
+}
+
+.form-container {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Style for the patient list */
+mat-list {
+  /* background-color: #f4f4f4; */
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+mat-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+mat-icon {
+  margin-right: 10px;
+}

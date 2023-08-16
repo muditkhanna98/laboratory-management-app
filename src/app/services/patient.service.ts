@@ -124,6 +124,20 @@ export class PatientService {
     return this.http.get('url/api/test-orders', httpOptions);
   }
 
+  getResults(): Observable<any> {
+    const storedData = JSON.parse(localStorage.getItem('user'));
+    const token = storedData.token;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
+    return this.http.get('url/api/test-results', httpOptions);
+  }
+
   saveTestResult(result: CreateTestResult): Observable<any> {
     const storedData = JSON.parse(localStorage.getItem('user'));
     const token = storedData.token;

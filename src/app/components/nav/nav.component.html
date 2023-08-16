@@ -20,7 +20,11 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="patients" routerLinkActive="active"
+          <a
+            class="nav-link"
+            *ngIf="this.loginDetails.role === 'staff'"
+            routerLink="patients"
+            routerLinkActive="active"
             >Patient Management</a
           >
         </li>

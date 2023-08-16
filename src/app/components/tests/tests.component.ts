@@ -23,6 +23,7 @@ export class TestsComponent implements OnInit {
 
   tests = [];
   orders = [];
+  testResults = [];
   test: FormGroup;
 
   constructor(
@@ -52,6 +53,7 @@ export class TestsComponent implements OnInit {
 
     this.getAllTestOrders();
     this.getAllAppointments();
+    this.getTestResults();
   }
 
   getAllAppointments() {
@@ -114,5 +116,9 @@ export class TestsComponent implements OnInit {
       console.log(value);
       this._snack.open('Test result uploaded successfully', 'cancel');
     });
+  getTestResults() {
+    this.patientService
+      .getResults()
+      .subscribe((values) => (this.testResults = values));
   }
 }

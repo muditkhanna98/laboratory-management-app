@@ -156,4 +156,52 @@
       </mat-card>
     </div>
   </mat-tab>
+  <mat-tab label="Test Results">
+    <mat-card
+      [ngClass]="
+        testOrder.status === 'pending' ? 'pending-card' : 'completed-card'
+      "
+      *ngFor="let testOrder of testResults"
+      class="mt-4"
+    >
+      <mat-card-content>
+        <div class="test-order-card">
+          <div class="test-order-info">
+            <mat-icon>{{
+              testOrder.testOrder.patient.gender === "Male" ? "male" : "female"
+            }}</mat-icon>
+            <div class="test-order-details">
+              <p>
+                <strong>Patient ID:</strong>
+                {{ testOrder.testOrder.patient.patientId }}
+              </p>
+              <p>
+                <strong>First Name:</strong>
+                {{ testOrder.testOrder.patient.firstName }}
+              </p>
+              <p>
+                <strong>Date of Birth:</strong>
+                {{ testOrder.testOrder.patient.dob | date : "shortDate" }}
+              </p>
+              <p>
+                <strong>Gender:</strong>
+                {{ testOrder.testOrder.patient.gender }}
+              </p>
+              <p>
+                <strong>Contact Number:</strong>
+                {{ testOrder.testOrder.patient.contactNumber }}
+              </p>
+              <p>
+                <strong>Test Assigned: </strong
+                >{{ testOrder.testOrder.test.testName }}
+              </p>
+            </div>
+          </div>
+          <p>Status: {{ testOrder.testOrder.status | uppercase }}</p>
+          <p>Technician: {{ testOrder.technician.username }}</p>
+          <p><strong>Result:</strong> {{ testOrder.resultText }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
 </mat-tab-group>

@@ -24,7 +24,13 @@
             >Patient Management</a
           >
         </li>
-        <li class="nav-item" *ngIf="this.loginDetails.role === 'physician'">
+        <li
+          class="nav-item"
+          *ngIf="
+            this.loginDetails.role === 'physician' ||
+            this.loginDetails.role === 'technician'
+          "
+        >
           <a class="nav-link" routerLink="tests" routerLinkActive="active"
             >Test Management</a
           >

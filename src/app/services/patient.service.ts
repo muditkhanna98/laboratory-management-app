@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Patient } from '../models/Patient';
+import { Result } from '../models/Result';
 import { Observable } from 'rxjs';
 import { Appointment } from '../models/Appointment';
 import { CreateTest } from '../models/CreateTest';
+import { CreateTestResult } from '../models/CreateTestResult';
 
 @Injectable({
   providedIn: 'root',
@@ -120,5 +122,19 @@ export class PatientService {
     };
 
     return this.http.get('url/api/test-orders', httpOptions);
+  }
+
+  saveTestResult(result: CreateTestResult): Observable<any> {
+    const storedData = JSON.parse(localStorage.getItem('user'));
+    const token = storedData.token;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
+    return this.http.post('url/api/test-results', result, httpOptions);
   }
 }

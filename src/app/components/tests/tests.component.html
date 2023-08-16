@@ -127,6 +127,30 @@
               </div>
             </div>
             <p>Status: {{ testOrder.status | uppercase }}</p>
+            <!-- New Elements: Text Input, Text Area, and Button -->
+            <br />
+            <mat-form-field>
+              <mat-label>Test Result</mat-label>
+              <textarea
+                matInput
+                placeholder="Enter test result"
+                [(ngModel)]="testOrder.testResult"
+              ></textarea>
+            </mat-form-field>
+            <br />
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="
+                saveTestResult(
+                  testOrder.testOrderId,
+                  testOrder.testResult,
+                  testOrder.patient.firstName
+                )
+              "
+            >
+              Save Test Result
+            </button>
           </div>
         </mat-card-content>
       </mat-card>

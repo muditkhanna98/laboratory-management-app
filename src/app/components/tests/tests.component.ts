@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment';
 import { AuthResponse } from 'src/app/models/AuthResponse';
 import { CreateTest } from 'src/app/models/CreateTest';
+import { CreateTestResult } from 'src/app/models/CreateTestResult';
 import { Patient } from 'src/app/models/Patient';
 import { AuthService } from 'src/app/services/auth.service';
 import { PatientService } from 'src/app/services/patient.service';
@@ -91,5 +92,27 @@ export class TestsComponent implements OnInit {
     });
 
     console.log(this.orders);
+  }
+
+  saveTestResult(testOrderId: number, result: string, patientName: string) {
+    console.log(testOrderId);
+    console.log(result);
+    const obj: CreateTestResult = {
+      testOrder: {
+        testOrderId: testOrderId,
+        patient: {
+          patientUserName: patientName,
+        },
+      },
+      technician: {
+        username: this.loginDetails.username,
+      },
+      resultText: result,
+    };
+
+    this.patientService.saveTestResult(obj).subscribe((value) => {
+      console.log(value);
+      this._snack.open('Test result uploaded successfully', 'cancel');
+    });
   }
 }

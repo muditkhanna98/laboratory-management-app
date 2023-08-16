@@ -1,4 +1,4 @@
-<mat-tab-group class="mt-4">
+<mat-tab-group class="mt-4" (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Create Test Order"
     ><div class="container-patient">
       <div
@@ -97,7 +97,7 @@
         *ngFor="let testOrder of orders"
         class="mt-4"
       >
-        <mat-card-content>
+        <mat-card-content style="padding: 5rem 5rem; font-size: 1rem">
           <div class="test-order-card">
             <div class="test-order-info">
               <mat-icon>{{
@@ -129,7 +129,13 @@
             <p>Status: {{ testOrder.status | uppercase }}</p>
             <!-- New Elements: Text Input, Text Area, and Button -->
             <br />
-            <mat-form-field>
+            <mat-form-field
+              style="width: 100%"
+              *ngIf="
+                this.loginDetails.role === 'technician' &&
+                testOrder.status !== 'Completed'
+              "
+            >
               <mat-label>Test Result</mat-label>
               <textarea
                 matInput
@@ -140,7 +146,11 @@
             <br />
             <button
               mat-raised-button
-              color="primary"
+              color="accent"
+              *ngIf="
+                this.loginDetails.role === 'technician' &&
+                testOrder.status !== 'Completed'
+              "
               (click)="
                 saveTestResult(
                   testOrder.testOrderId,
@@ -197,7 +207,6 @@
               </p>
             </div>
           </div>
-          <p>Status: {{ testOrder.testOrder.status | uppercase }}</p>
           <p>Technician: {{ testOrder.technician.username }}</p>
           <p><strong>Result:</strong> {{ testOrder.resultText }}</p>
         </div>

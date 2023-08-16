@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthResponse } from 'src/app/models/AuthResponse';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -16,7 +17,8 @@ export class RegisterationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _snack: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class RegisterationComponent implements OnInit {
           'User registered with username: ' + value.username,
           'Close'
         );
+        this.router.navigate(['/login']);
       },
       (error: HttpErrorResponse) => {
         console.log(error.error.message);

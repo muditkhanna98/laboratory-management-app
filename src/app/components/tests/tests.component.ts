@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
 import { Appointment } from 'src/app/models/Appointment';
 import { AuthResponse } from 'src/app/models/AuthResponse';
@@ -92,8 +93,6 @@ export class TestsComponent implements OnInit {
     this.patientService.getAllTestOrders().subscribe((values) => {
       this.orders = values;
     });
-
-    console.log(this.orders);
   }
 
   saveTestResult(testOrderId: number, result: string, patientName: string) {
@@ -113,9 +112,18 @@ export class TestsComponent implements OnInit {
     };
 
     this.patientService.saveTestResult(obj).subscribe((value) => {
-      console.log(value);
+      this.orders = value;
       this._snack.open('Test result uploaded successfully', 'cancel');
     });
+  }
+
+  onTabChange(event: MatTabChangeEvent) {
+    console.log(event.tab.textLabel);
+    if (event.tab.textLabel === 'View Test Order/Post Resul') {
+      this.getAllTestOrders();
+    } else if (event.tab.textLabel === 'Test Results') {
+      this.getTestResults();
+    }
   }
 
   getTestResults() {

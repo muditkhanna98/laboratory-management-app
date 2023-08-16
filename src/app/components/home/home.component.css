@@ -1,0 +1,16 @@
+.image-card {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 93.7vh;
+  overflow: hidden;
+}
+
+.image {
+  background-image: url("../../../assets/home-page.jpg");
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image */
+  width: 100%;
+  height: 100%;
+}

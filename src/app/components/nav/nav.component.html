@@ -22,7 +22,10 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            *ngIf="this.loginDetails.role === 'staff'"
+            *ngIf="
+              this.loginDetails.role === 'staff' ||
+              this.loginDetails.role === 'admin'
+            "
             routerLink="patients"
             routerLinkActive="active"
             >Patient Management</a

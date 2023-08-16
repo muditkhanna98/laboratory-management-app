@@ -94,7 +94,9 @@
   >
   <mat-tab
     label="Create Appointment"
-    *ngIf="this.loginDetails.role === 'staff'"
+    *ngIf="
+      this.loginDetails.role === 'staff' || this.loginDetails.role === 'admin'
+    "
   >
     <h4 class="mt-4">Create Appointment</h4>
     <mat-divider></mat-divider>

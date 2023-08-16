@@ -116,6 +116,8 @@ export class TestsComponent implements OnInit {
       console.log(value);
       this._snack.open('Test result uploaded successfully', 'cancel');
     });
+  }
+
   getTestResults() {
     this.patientService
       .getResults()
